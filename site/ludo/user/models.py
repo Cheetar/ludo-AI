@@ -11,7 +11,7 @@ class User(models.Model):
     source = models.CharField(max_length=128)
 
     def __str__(self):
-        return self.title
+        return self.name
 
 class Code(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
