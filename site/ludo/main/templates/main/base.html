@@ -1,0 +1,27 @@
+<html>
+  <head>
+    {% if title %}
+      <title>{{ title }} - Ludo KFnfD</title>
+    {% else %}
+      <title>Ludo KFnfD</title>
+    {% endif %}
+  </head>
+  <body>
+    <nav class="topnav">
+      <a href="/">Home</a>
+      <a href="/submit">Submit</a>
+      <a href="/1">View</a>
+      {% if user.is_authenticated %}
+        <a href="/logout">Logout</a>
+      {% else %}
+        <a href="/login">Login</a>
+      {% endif %}
+      <a href="/register">Register</a>
+      <a href="/admin">Admin</a>
+    </nav>
+
+    <div name="content", class="main">
+    {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

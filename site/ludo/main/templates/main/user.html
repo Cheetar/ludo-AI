@@ -1,0 +1,11 @@
+{% extends 'main/base.html'%}
+
+{% block content %}
+User page
+<br>
+{{ id }}<br>
+{{ user.username }}<br>
+{% for code in user.code_set.all %}
+ {{code.title}}<br>
+{% endfor %}
+{% endblock %}
