@@ -1,10 +1,15 @@
 {% extends 'main/base.html'%}
 
 {% block content %}
-<form action="/submit/" method="post">
+<h3>Add solution</h3>
+<form action="/submit/" method="post" class="form-group">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
+    <div class="input-group mb-3">
+      {{ form.as_p }}
+      <div class="input-group-prepend">
+        <button type="submit" name="Submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
 </form>
 
 {% endblock %}
