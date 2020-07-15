@@ -1,8 +1,15 @@
 {% extends 'main/base.html'%}
 
 {% block content %}
-  <h2>Contest info</h2><br>
 
-  {{ contest.title }}
+  <h2>{{ contest.title }}</h2><br>
+
+  <h5>Participants:</h5>
+
+  {% for participant in participants %}
+
+    {{ participant.title }} – {{ participant.rating }} {{ participant.author }}<br>
+
+  {% endfor %}
 
 {% endblock %}

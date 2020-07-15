@@ -1,11 +1,12 @@
 {% extends 'main/base.html'%}
 
 {% block content %}
-User page
-<br>
-{{ id }}<br>
-{{ user.username }}<br>
+<h3>User info</h3>
+<h6>Username: {{ user.username }}, id: {{ id }}</h6>
+List of programs:<br>
+<ul>
 {% for code in user.code_set.all %}
- {{code.title}}<br>
+ <li>{{code.title}} – {{code.rating}}</li>
 {% endfor %}
+</ul>
 {% endblock %}

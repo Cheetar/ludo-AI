@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from .forms import SubmitNewSolution
 from .models import Code
@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
 def index(request, id):
-    user = User.objects.get(id=id)
+    user = get_object_or_404(User, id=id)
     return render(request, "main/user.html", { 'id':id, 'user':user })
 
 def home(request):
