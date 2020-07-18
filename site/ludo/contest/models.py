@@ -1,9 +1,10 @@
 from django.db import models
 from main.models import Code
 from random import sample
+from trueskill import Rating, rate, TrueSkill
 
 '''
-class game():
+class game(models.Model):
     players
     history
     result
@@ -12,8 +13,10 @@ class game():
 class Participant(Code):
     father_id = models.IntegerField()
     no_played_games = models.IntegerField(default=0)
-    local_rating = models.FloatField(default=1200.)
+    #local_rating = models.FloatField(default=1200.)
     score = models.FloatField(default=0.) #
+    #rating = Rating()
+    def set_rating(self, rating): self.rating = rating
 
     '''
     def no_played_games_add_1(self): self.no_played_games+=1
@@ -41,14 +44,37 @@ class Contest(models.Model):
 
             return players
 
-    def play(players):
+    def play(self, players):
         return 1;
 
-    def update_score():
-        pass
+    def update_score(self, players, winner):
+        result = [0,0,0,0]
+        result[winner] = 1
 
+        players[0].rating, players[1].rating, players[2].rating, players[3].rating = rate([[players[0].rating], [players[1].rating], [players[2].rating], [players[3].rating]])
 
+        for i in range(4):
+            players[i].set_rating(players[i].rating)
+            players[i].save()
+            '''
+            p = Participant.objects.get(id=players[i].id)
+            p.rating = players[i].rating
+            p.save()
+            '''
 
-
-
+        for i in range(4):
+            print(players[i].rating)
+            '''
+        for i in range(4):
+            players[i].save()
+        '''
+        print('Mecz rozegrany!')
     #def add_participant(self, p: Participant): self.participants.add(p)
+
+    def game(self):
+        TrueSkill(backend='mpmath').cdf
+        players = self.choose_players()
+        if players != None:
+            winner = self.play(players)
+            #if self.ranking_game:
+            self.update_score(players, winner)

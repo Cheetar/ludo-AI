@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from trueskill import Rating
 
 class Code(models.Model):
     author = models.ForeignKey(
@@ -7,14 +8,14 @@ class Code(models.Model):
         on_delete=models.CASCADE,)
     title = models.CharField(max_length=200)
     code = models.CharField(max_length=20000)
-    rating = models.IntegerField(default=1200)
+    rating = Rating()
     public = models.BooleanField(default=True)
 
     #type
     #no round
 
-    class Meta:
-        order_with_respect_to = 'rating'
+    #class Meta:
+    #    order_with_respect_to = 'rating'
 
     def __str__(self):
         return self.title
