@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h3>Add solution</h3>
+<h2>{{ title }}</h2>
 <form action="/submit/" method="post" class="form-group">
     {% csrf_token %}
     {{ form|crispy }}

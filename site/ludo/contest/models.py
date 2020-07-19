@@ -5,7 +5,7 @@ from trueskill import Rating, rate, TrueSkill
 
 '''
 class game(models.Model):
-    players
+    players = []
     history
     result
 '''
@@ -47,26 +47,33 @@ class Contest(models.Model):
     def play(self, players):
         return 1;
 
-    def update_score(self, players, winner):
-        result = [0,0,0,0]
-        result[winner] = 1
-
-        players[0].rating, players[1].rating, players[2].rating, players[3].rating = rate([[players[0].rating], [players[1].rating], [players[2].rating], [players[3].rating]])
+    def update_score(self, p: list, winner): #p – list which contains 4 participants
+        result = [1,1,1,1]
+        result[winner] = 0
 
         for i in range(4):
-            players[i].set_rating(players[i].rating)
-            players[i].save()
-            '''
-            p = Participant.objects.get(id=players[i].id)
-            p.rating = players[i].rating
-            p.save()
-            '''
+            print(p[i].rating)
+
+        p[0].rating, p[1].rating, p[2].rating, p[3].rating = rate([[p[0].rating], [p[1].rating], [p[2].rating], [p[3].rating]], ranks=result)
+
+        p[winner].score+=1
 
         for i in range(4):
-            print(players[i].rating)
+            p[i].set_rating(p[i].rating)
+            p[i].no_played_games+=1
+            p[i].save()
+
+            q = Participant.objects.get(id=p[i].id)
+            q.set_rating(p[i].rating)
+            #q.rating = p[i].rating
+            #q.save()
+
+
+        for i in range(4):
+            print(p[i].rating)
             '''
         for i in range(4):
-            players[i].save()
+            p[i].save()
         '''
         print('Mecz rozegrany!')
     #def add_participant(self, p: Participant): self.participants.add(p)
@@ -78,3 +85,5 @@ class Contest(models.Model):
             winner = self.play(players)
             #if self.ranking_game:
             self.update_score(players, winner)
+            for p in self.participants.all():
+                print(p.rating)

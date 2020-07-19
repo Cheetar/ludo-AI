@@ -8,8 +8,15 @@
 
   {% for participant in participants %}
 
-    {{ participant.title }} – {{ participant.rating }} {{ participant.author }}<br>
+    {{ participant.title }} – {{ participant.rating.mu }} {{ participant.rating.sigma }} {{ participant.author }}<br>
 
   {% endfor %}
+
+  <form method="post" action="#" class="form-group">
+  {% csrf_token %}
+  <button type="submit", name="play_game", value="play_game" class="btn btn-success">Play game</button>
+  <button type="submit", name="contest", value="contest" class="btn btn-success">Start contest</button>
+  <button class="btn btn-success">Show history</button>
+  </form>
 
 {% endblock %}

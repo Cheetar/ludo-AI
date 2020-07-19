@@ -20,11 +20,11 @@ def submit(request):
         if form.is_valid():
             t = form.cleaned_data['title']
             c = form.cleaned_data['code']
-            a = request.user#???
+            a = request.user
             code = Code(author=a, title=t, code=c)
             code.save()
             #request.user.code_ser.create(title=t, code=c)
             return HttpResponseRedirect('/%i' %a.id)
 
     form = SubmitNewSolution()
-    return render(request, "main/submit.html", {'title':'Submit code', 'form':form })
+    return render(request, "main/submit.html", {'title':'Add solution', 'form':form })
