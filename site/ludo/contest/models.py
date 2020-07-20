@@ -13,9 +13,7 @@ class game(models.Model):
 class Participant(Code):
     father_id = models.IntegerField()
     no_played_games = models.IntegerField(default=0)
-    #local_rating = models.FloatField(default=1200.)
-    score = models.FloatField(default=0.) #
-    #rating = Rating()
+    score = models.FloatField(default=0.)
     def set_rating(self, rating): self.rating = rating
 
     '''

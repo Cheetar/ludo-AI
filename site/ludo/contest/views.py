@@ -13,6 +13,10 @@ def show_contest(request, id):
     if request.method == "POST":
         if request.POST.get("play_game"):
             contest.game()
+        elif request.POST.get("contest"):
+            for i in range(100):
+                contest.game()
+
 
     return render(request, "contest/show_contest.html", { 'contest': contest,
                                                           'participants': participants })
