@@ -10,6 +10,7 @@ class Code(models.Model):
     code = models.CharField(max_length=20000)
     #rating = Rating()
     public = models.BooleanField(default=True)
+    #date
 
     #type
     #no round

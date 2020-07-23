@@ -4,7 +4,7 @@
   <h2>List of Contests</h2><br>
 
   {% for contest in contests %}
-    <a href='/contest/{{ contest.id }}'> {{ contest.title }} </a><br>
+    <p><a href='/contest/{{ contest.id }}'> <button class="btn btn-primary">{{ contest.title }}</button> </a></p>
   {% endfor %}
-  
+
 {% endblock %}

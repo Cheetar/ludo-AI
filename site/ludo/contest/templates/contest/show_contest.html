@@ -6,11 +6,28 @@
 
   <h5>Participants:</h5>
 
-  {% for participant in participants %}
-
-    {{ participant.title }} – {{ participant.rating.mu }} {{ participant.score }}/{{ participant.no_played_games }} {{ participant.author }}<br>
-
-  {% endfor %}
+  <table class="table table-borderless">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Score / No. Games</th>
+        <th scope="col">Author</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for participant in participants %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ participant.title }}</td>
+        <td>{{ participant.rating.mu }}</td>
+        <td>{{ participant.get_score }}/{{ participant.no_played_games }}</td>
+        <td>{{ participant.author }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
   <form method="post" action="#" class="form-group">
   {% csrf_token %}

@@ -10,11 +10,9 @@ def index(request, id):
     user = get_object_or_404(User, id=id)
     return render(request, "main/user.html", { 'id':id, 'user':user })
 
-def home(request):
-    return render(request, "main/home.html", {})
-
-
 def download_file(request):
+    pass
+    '''
     fl_path = ''
     filename = 'check.py'
 
@@ -23,6 +21,13 @@ def download_file(request):
     response = HttpResponse(fl, content_type=mime_type)
     response['Content-Disposition'] = "attachment; filename=%s" % filename
         return response
+    '''
+
+def home(request):
+    if request.method == "POST":
+        if request.POST.get("download"):
+            download_file(request)
+    return render(request, "main/home.html", {})
 
 @login_required
 def submit(request):

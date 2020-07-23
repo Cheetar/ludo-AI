@@ -17,6 +17,8 @@ class Participant(Code):
     rating = Rating()
     def set_rating(self, rating): self.rating = rating
 
+    def get_score(self): return int(self.score)
+
     '''
     def no_played_games_add_1(self): self.no_played_games+=1
     def change_local_rating(self, change): self.local_rating+=change
@@ -27,6 +29,7 @@ class Contest(models.Model):
     title = models.CharField(max_length=200)
     participants = models.ManyToManyField(Participant)
     ranking_game = models.BooleanField(default=True)
+    no_played_games = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
