@@ -8,7 +8,7 @@
 
   {% for participant in participants %}
 
-    {{ participant.title }} – {{ participant.rating.mu }} {{ participant.author }}<br>
+    {{ participant.title }} – {{ participant.rating.mu }} {{ participant.score }}/{{ participant.no_played_games }} {{ participant.author }}<br>
 
   {% endfor %}
 

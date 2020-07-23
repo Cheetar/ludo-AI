@@ -4,6 +4,7 @@ from .forms import SubmitNewSolution
 from .models import Code
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+import mimetypes
 
 def index(request, id):
     user = get_object_or_404(User, id=id)
@@ -11,6 +12,17 @@ def index(request, id):
 
 def home(request):
     return render(request, "main/home.html", {})
+
+
+def download_file(request):
+    fl_path = ''
+    filename = 'check.py'
+
+    fl = open(fl_path, 'r’)
+    mime_type, _ = mimetypes.guess_type(fl_path)
+    response = HttpResponse(fl, content_type=mime_type)
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+        return response
 
 @login_required
 def submit(request):

@@ -8,7 +8,7 @@ class Code(models.Model):
         on_delete=models.CASCADE,)
     title = models.CharField(max_length=200)
     code = models.CharField(max_length=20000)
-    rating = Rating()
+    #rating = Rating()
     public = models.BooleanField(default=True)
 
     #type

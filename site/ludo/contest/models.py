@@ -5,15 +5,16 @@ from trueskill import Rating, rate, TrueSkill
 
 '''
 class game(models.Model):
-    players = []
+    players_ids
     history
-    result
 '''
 
 class Participant(Code):
     father_id = models.IntegerField()
+    #father = models.ForeignKey(Code, on_delete=models.CASCADE)
     no_played_games = models.IntegerField(default=0)
     score = models.FloatField(default=0.)
+    rating = Rating()
     def set_rating(self, rating): self.rating = rating
 
     '''
@@ -46,33 +47,38 @@ class Contest(models.Model):
         return 1;
 
     def update_score(self, p: list, winner): #p – list which contains 4 participants
-        result = [1,1,1,1]
-        result[winner] = 0
+        result = [2,2,2,2]
+        result[winner] = 1
 
         for i in range(4):
             print(p[i].rating)
 
-        p[0].rating, p[1].rating, p[2].rating, p[3].rating = rate([[p[0].rating], [p[1].rating], [p[2].rating], [p[3].rating]], ranks=result)
-
+        n0, n1, n2, n3 = rate([[p[0].rating], [p[1].rating], [p[2].rating], [p[3].rating]], ranks=result)
+        #p[0].rating, p[1].rating, p[2].rating, p[3].rating
+        print(type(n0))
+        print(len(n0))
+        print(n0[0])
+        print(type(n0))
+        p[0].rating=n0[0]
+        p[0].save()
+        p[1].rating=n1[0]
+        p[2].rating=n2[0]
+        p[3].rating=n3[0]
+        p[1].save()
+        p[2].save()
+        p[3].save()
         p[winner].score+=1
 
         for i in range(4):
-            p[i].set_rating(p[i].rating)
             p[i].no_played_games+=1
             p[i].save()
 
             q = Participant.objects.get(id=p[i].id)
             q.set_rating(p[i].rating)
             #q.rating = p[i].rating
-            #q.save()
-
-
+            q.save()
         for i in range(4):
             print(p[i].rating)
-            '''
-        for i in range(4):
-            p[i].save()
-        '''
         print('Mecz rozegrany!')
     #def add_participant(self, p: Participant): self.participants.add(p)
 
@@ -81,7 +87,7 @@ class Contest(models.Model):
         players = self.choose_players()
         if players != None:
             winner = self.play(players)
-            #if self.ranking_game:
-            self.update_score(players, winner)
-            for p in self.participants.all():
-                print(p.rating)
+            if self.ranking_game:
+                self.update_score(players, winner)
+                for p in self.participants.all():
+                    print(p.rating)
